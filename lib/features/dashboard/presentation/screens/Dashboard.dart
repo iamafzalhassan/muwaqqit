@@ -1,56 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:muwaqqit/features/dashboard/data/repositories/dashboard_repository_impl.dart';
-import 'package:muwaqqit/features/dashboard/presentation/controllers/dashboard_controller.dart';
+import 'package:muwaqqit/features/dashboard/presentation/cubits/dashboard_cubit.dart';
+import 'package:muwaqqit/features/dashboard/presentation/cubits/dashboard_state.dart';
 import 'package:muwaqqit/features/dashboard/presentation/widgets/header_bar.dart';
 import 'package:muwaqqit/features/dashboard/presentation/widgets/main_panels_row.dart';
 import 'package:muwaqqit/features/dashboard/presentation/widgets/prayer_time_bar.dart';
 
-class Dashboard extends StatefulWidget {
+class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
 
   @override
-  State<Dashboard> createState() => _DashboardState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) =>
+          DashboardCubit(repository: const DashboardRepositoryImpl()),
+      child: const _DashboardView(),
+    );
+  }
 }
 
-class _DashboardState extends State<Dashboard> {
-  late final DashboardController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = DashboardController(
-      repository: const DashboardRepositoryImpl(),
-    );
-    _controller.addListener(_onTick);
-  }
-
-  void _onTick() => setState(() {});
-
-  @override
-  void dispose() {
-    _controller.removeListener(_onTick);
-    _controller.dispose();
-    super.dispose();
-  }
+class _DashboardView extends StatelessWidget {
+  const _DashboardView();
 
   @override
   Widget build(BuildContext context) {
-    final state = _controller.state;
-
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          HeaderBar(
-            gregorianDate: state.gregorianDate,
-            masjidName: state.masjidName,
-            hijriDate: state.hijriDate,
-          ),
-
-          MainPanelsRow(now: state.now, jumuahCountdown: state.jumuahCountdown),
-
-          PrayerTimeBar(prayers: state.prayerTimes),
-        ],
+      body: BlocBuilder<DashboardCubit, DashboardState>(
+        builder: (context, state) {
+          return Column(
+            children: [
+              HeaderBar(
+                gregorianDate: state.gregorianDate,
+                masjidName: state.masjidName,
+                hijriDate: state.hijriDate,
+              ),
+              MainPanelsRow(
+                now: state.now,
+                jumuahCountdown: state.jumuahCountdown,
+              ),
+              PrayerTimeBar(prayers: state.prayerTimes),
+            ],
+          );
+        },
       ),
     );
   }

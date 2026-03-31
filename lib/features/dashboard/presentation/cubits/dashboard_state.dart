@@ -1,4 +1,4 @@
-import 'prayer_time.dart';
+import '../../domain/entities/prayer_time.dart';
 
 class DashboardState {
   final DateTime now;

@@ -1,31 +1,27 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:muwaqqit/features/dashboard/presentation/cubits/dashboard_state.dart';
 import 'package:muwaqqit/features/dashboard/domain/repositories/dashboard_repository.dart';
 
-class DashboardController extends ChangeNotifier {
-  DashboardController({required DashboardRepository repository})
-    : _repository = repository {
-    _state = _repository.getInitialState();
+class DashboardCubit extends Cubit<DashboardState> {
+  DashboardCubit({required DashboardRepository repository})
+    : _repository = repository,
+      super(repository.getInitialState()) {
     _startTimer();
   }
 
   final DashboardRepository _repository;
-  late DashboardState _state;
   Timer? _timer;
-
-  DashboardState get state => _state;
 
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      _state = _repository.tick(_state);
-      notifyListeners();
+      emit(_repository.tick(state));
     });
   }
 
   @override
-  void dispose() {
+  Future<void> close() {
     _timer?.cancel();
-    super.dispose();
+    return super.close();
   }
 }

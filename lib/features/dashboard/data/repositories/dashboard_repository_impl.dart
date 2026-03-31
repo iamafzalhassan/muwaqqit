@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:muwaqqit/core/constants/app_constants.dart';
-import 'package:muwaqqit/features/dashboard/domain/entities/dashboard_state.dart';
+import 'package:muwaqqit/features/dashboard/presentation/cubits/dashboard_state.dart';
 import 'package:muwaqqit/features/dashboard/domain/entities/prayer_time.dart';
 import 'package:muwaqqit/features/dashboard/domain/repositories/dashboard_repository.dart';
 
