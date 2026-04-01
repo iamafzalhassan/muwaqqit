@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:muwaqqit/features/dashboard/data/repositories/dashboard_repository_impl.dart';
 import 'package:muwaqqit/features/dashboard/presentation/cubits/dashboard_cubit.dart';
 import 'package:muwaqqit/features/dashboard/presentation/cubits/dashboard_state.dart';
 import 'package:muwaqqit/features/dashboard/presentation/widgets/header_bar.dart';
@@ -9,19 +8,6 @@ import 'package:muwaqqit/features/dashboard/presentation/widgets/prayer_time_bar
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) =>
-          DashboardCubit(repository: const DashboardRepositoryImpl()),
-      child: const _DashboardView(),
-    );
-  }
-}
-
-class _DashboardView extends StatelessWidget {
-  const _DashboardView();
 
   @override
   Widget build(BuildContext context) {
