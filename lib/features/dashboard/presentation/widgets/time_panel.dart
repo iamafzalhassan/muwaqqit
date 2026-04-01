@@ -17,11 +17,8 @@ class TimePanel extends StatelessWidget {
         children: [
           _label('TIME'),
           const SizedBox(height: 4),
-
           _bigNumber(du.DateUtils.formatHours(now)),
-
           _bigNumber(du.DateUtils.formatMinutes(now)),
-
           _secondsNumber(du.DateUtils.formatSeconds(now)),
         ],
       ),

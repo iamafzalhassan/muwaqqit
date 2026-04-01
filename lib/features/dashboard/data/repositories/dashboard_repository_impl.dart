@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart';
-import 'package:muwaqqit/core/constants/app_constants.dart';
 import 'package:muwaqqit/features/dashboard/presentation/cubits/dashboard_state.dart';
 import 'package:muwaqqit/features/dashboard/domain/entities/prayer_time.dart';
 import 'package:muwaqqit/features/dashboard/domain/repositories/dashboard_repository.dart';
@@ -31,7 +30,7 @@ class DashboardRepositoryImpl implements DashboardRepository {
       prayerTimes: prayers,
       gregorianDate: _formatGregorian(now),
       hijriDate: '05 RABI AL AKHIR 1447',
-      masjidName: AppConstants.masjidName,
+      masjidName: 'MUHIYYADDEEN MASJID',
     );
   }
 

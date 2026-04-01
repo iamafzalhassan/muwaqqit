@@ -4,9 +4,7 @@ import 'package:muwaqqit/features/dashboard/presentation/cubits/dashboard_state.
 import 'package:muwaqqit/features/dashboard/domain/repositories/dashboard_repository.dart';
 
 class DashboardCubit extends Cubit<DashboardState> {
-  DashboardCubit({required DashboardRepository repository})
-    : _repository = repository,
-      super(repository.getInitialState()) {
+  DashboardCubit({required DashboardRepository repository}): _repository = repository, super(repository.getInitialState()) {
     _startTimer();
   }
 

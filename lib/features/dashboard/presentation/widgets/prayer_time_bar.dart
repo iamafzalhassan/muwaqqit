@@ -35,9 +35,7 @@ class _PrayerSlot extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 143,
-      color: prayer.isActive
-          ? AppPallete.prayerBarActive
-          : AppPallete.prayerBarInactive,
+      color: prayer.isActive ? AppPallete.prayerBarActive : AppPallete.prayerBarInactive,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -85,9 +83,7 @@ class _DashedLinePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     const dashHeight = 8.0;
     const dashSpace = 5.0;
-    final paint = Paint()
-      ..color = AppPallete.textDark.withOpacity(0.35)
-      ..strokeWidth = 2;
+    final paint = Paint()..color = AppPallete.textDark.withOpacity(0.35)..strokeWidth = 2;
 
     double startY = 0;
     while (startY < size.height) {
