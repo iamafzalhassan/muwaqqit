@@ -19,7 +19,7 @@ class PrayerTimeBar extends StatelessWidget {
     for (int i = 0; i < prayers.length; i++) {
       widgets.add(Expanded(child: _PrayerSlot(prayer: prayers[i])));
       if (i < prayers.length - 1) {
-        widgets.add(const _DashedDivider());
+        widgets.add(const VerticalDottedDivider());
       }
     }
     return widgets;
@@ -34,8 +34,10 @@ class _PrayerSlot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 143,
-      color: prayer.isActive ? AppPallete.prayerBarActive : AppPallete.prayerBarInactive,
+      height: 80,
+      color: prayer.isActive
+          ? AppPallete.prayerBarActive
+          : AppPallete.prayerBarInactive,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -43,18 +45,17 @@ class _PrayerSlot extends StatelessWidget {
             prayer.name,
             style: const TextStyle(
               fontFamily: AppFont.productSansThin,
-              fontSize: 28,
+              fontSize: 25,
               color: AppPallete.textDark,
               letterSpacing: 1.5,
               fontWeight: FontWeight.w300,
             ),
           ),
-          const SizedBox(height: 4),
           Text(
             du.DateUtils.formatPrayerTime(prayer.time),
             style: const TextStyle(
               fontFamily: AppFont.googleSans,
-              fontSize: 38,
+              fontSize: 25,
               color: AppPallete.textDark,
               fontWeight: FontWeight.w400,
             ),
@@ -65,37 +66,31 @@ class _PrayerSlot extends StatelessWidget {
   }
 }
 
-class _DashedDivider extends StatelessWidget {
-  const _DashedDivider();
+class VerticalDottedDivider extends StatelessWidget {
+  final double height;
+  final double dotHeight;
+  final double spacing;
+  final Color color;
+
+  const VerticalDottedDivider({
+    super.key,
+    this.height = 80,
+    this.dotHeight = 4,
+    this.spacing = 4,
+    this.color = Colors.black,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 2,
-      height: 143,
-      child: CustomPaint(painter: _DashedLinePainter()),
+      height: height,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: List.generate(
+          (height / (dotHeight + spacing)).floor(),
+          (_) => Container(width: 2, height: dotHeight, color: color),
+        ),
+      ),
     );
   }
-}
-
-class _DashedLinePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    const dashHeight = 8.0;
-    const dashSpace = 5.0;
-    final paint = Paint()..color = AppPallete.textDark.withOpacity(0.35)..strokeWidth = 2;
-
-    double startY = 0;
-    while (startY < size.height) {
-      canvas.drawLine(
-        Offset(size.width / 2, startY),
-        Offset(size.width / 2, startY + dashHeight),
-        paint,
-      );
-      startY += dashHeight + dashSpace;
-    }
-  }
-
-  @override
-  bool shouldRepaint(_DashedLinePainter _) => false;
 }

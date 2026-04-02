@@ -21,21 +21,33 @@ class HeaderBar extends StatelessWidget {
         Expanded(
           child: _HeaderCell(
             color: AppPallete.headerDark,
-            child: Text(gregorianDate, style: _headerTextStyle()),
+            child: Text(
+              gregorianDate,
+              textAlign: TextAlign.center,
+              style: _headerTextStyle(),
+            ),
           ),
         ),
 
         Expanded(
           child: _HeaderCell(
             color: AppPallete.headerDarker,
-            child: Text(masjidName, style: _headerTextStyle()),
+            child: Text(
+              masjidName,
+              textAlign: TextAlign.center,
+              style: _headerTextStyle(),
+            ),
           ),
         ),
 
         Expanded(
           child: _HeaderCell(
             color: AppPallete.headerDark,
-            child: Text(hijriDate, style: _headerTextStyle()),
+            child: Text(
+              hijriDate,
+              textAlign: TextAlign.center,
+              style: _headerTextStyle(),
+            ),
           ),
         ),
       ],
@@ -44,9 +56,9 @@ class HeaderBar extends StatelessWidget {
 
   TextStyle _headerTextStyle() => const TextStyle(
     fontFamily: AppFont.productSansThin,
-    fontSize: 25,
+    fontSize: 20,
     color: AppPallete.textWhite,
-    letterSpacing: 3.75,
+    letterSpacing: 2,
     fontWeight: FontWeight.w300,
   );
 }

@@ -16,7 +16,7 @@ class TimePanel extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _label('TIME'),
-          const SizedBox(height: 4),
+          Spacer(),
           _bigNumber(du.DateUtils.formatHours(now)),
           _bigNumber(du.DateUtils.formatMinutes(now)),
           _secondsNumber(du.DateUtils.formatSeconds(now)),
@@ -27,11 +27,12 @@ class TimePanel extends StatelessWidget {
 
   Widget _label(String text) => Text(
     text,
+    textAlign: TextAlign.center,
     style: const TextStyle(
       fontFamily: AppFont.productSansThin,
-      fontSize: 35,
+      fontSize: 20,
       color: AppPallete.textDark,
-      letterSpacing: 3.5,
+      letterSpacing: 2,
       fontWeight: FontWeight.w300,
     ),
   );
@@ -40,7 +41,7 @@ class TimePanel extends StatelessWidget {
     text,
     style: const TextStyle(
       fontFamily: AppFont.googleSans,
-      fontSize: 180,
+      fontSize: 50,
       color: AppPallete.textDark,
       height: 0.95,
       fontWeight: FontWeight.w400,
@@ -51,7 +52,7 @@ class TimePanel extends StatelessWidget {
     text,
     style: const TextStyle(
       fontFamily: AppFont.productSansThin,
-      fontSize: 100,
+      fontSize: 50,
       color: AppPallete.textDark,
       fontWeight: FontWeight.w300,
     ),
