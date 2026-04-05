@@ -71,21 +71,56 @@ class _IconGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double x = (MediaQuery.of(context).size.width) / 3;
-    double y = (x - 32) - 48;
-    double z = (y / 4);
-
-    return Wrap(
-      spacing: 16,
-      runSpacing: 16,
-      direction: Axis.horizontal,
-      children: List.generate(
-        icons.length,
-        (i) => SizedBox(
-          width: z,
-          child: _MannerIcon(url: icons[i]),
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 50,
+              child: _MannerIcon(url: icons[0]),
+            ),
+            Container(
+              width: 50,
+              child: _MannerIcon(url: icons[1]),
+            ),
+            Container(
+              width: 50,
+              child: _MannerIcon(url: icons[2]),
+            )
+          ],
         ),
-      ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 50,
+              child: _MannerIcon(url: icons[3]),
+            ),
+            Container(
+              width: 50,
+              child: _MannerIcon(url: icons[4]),
+            ),
+            Container(
+              width: 50,
+              child: _MannerIcon(url: icons[5]),
+            )
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 50,
+              child: _MannerIcon(url: icons[6]),
+            ),
+            Container(
+              width: 50,
+              child: _MannerIcon(url: icons[7]),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -11,18 +11,55 @@ class PrayerTimeBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: _buildSlots());
-  }
-
-  List<Widget> _buildSlots() {
-    final widgets = <Widget>[];
-    for (int i = 0; i < prayers.length; i++) {
-      widgets.add(Expanded(child: _PrayerSlot(prayer: prayers[i])));
-      if (i < prayers.length - 1) {
-        widgets.add(const VerticalDottedDivider());
-      }
-    }
-    return widgets;
+    return Stack(
+      children: [
+        Row(
+          children: [
+            _PrayerSlot(prayer: prayers[0]),
+            _PrayerSlot(prayer: prayers[1]),
+            _PrayerSlot(prayer: prayers[2]),
+            _PrayerSlot(prayer: prayers[3]),
+            _PrayerSlot(prayer: prayers[4]),
+            _PrayerSlot(prayer: prayers[5]),
+          ],
+        ),
+        Row(
+          children: [
+            SizedBox(
+              height: 60,
+              width: MediaQuery.of(context).size.width / 3,
+              child: VerticalDottedDivider(),
+            ),
+            SizedBox(
+              height: 60,
+              width: MediaQuery.of(context).size.width / 3,
+              child: VerticalDottedDivider(),
+            ),
+            SizedBox(
+              height: 60,
+              width: MediaQuery.of(context).size.width / 3,
+              child: VerticalDottedDivider(),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 60,
+              width: (MediaQuery.of(context).size.width / 3) + 2,
+              child: Row(
+                children: [
+                  VerticalDottedDivider(),
+                  Spacer(),
+                  VerticalDottedDivider(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }
 
@@ -34,7 +71,8 @@ class _PrayerSlot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
+      height: 60,
+      width: MediaQuery.of(context).size.width / 6,
       color: prayer.isActive
           ? AppPallete.prayerBarActive
           : AppPallete.prayerBarInactive,
@@ -45,7 +83,7 @@ class _PrayerSlot extends StatelessWidget {
             prayer.name,
             style: const TextStyle(
               fontFamily: AppFont.productSansThin,
-              fontSize: 25,
+              fontSize: 20,
               color: AppPallete.textDark,
               letterSpacing: 1.5,
               fontWeight: FontWeight.w300,
@@ -55,7 +93,7 @@ class _PrayerSlot extends StatelessWidget {
             du.DateUtils.formatPrayerTime(prayer.time),
             style: const TextStyle(
               fontFamily: AppFont.googleSans,
-              fontSize: 25,
+              fontSize: 20,
               color: AppPallete.textDark,
               fontWeight: FontWeight.w400,
             ),
@@ -74,10 +112,10 @@ class VerticalDottedDivider extends StatelessWidget {
 
   const VerticalDottedDivider({
     super.key,
-    this.height = 80,
+    this.height = 60,
     this.dotHeight = 4,
     this.spacing = 4,
-    this.color = Colors.black,
+    this.color = Colors.white,
   });
 
   @override

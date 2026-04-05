@@ -73,7 +73,7 @@ class _HeaderCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: color,
-      height: 68,
+      height: 70,
       alignment: Alignment.center,
       child: child,
     );
