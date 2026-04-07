@@ -21,3 +21,15 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/fonts/
+    - assets/images/
+
+  fonts:
+    - family: GoogleSans
+      fonts:
+        - asset: assets/fonts/GoogleSans-Regular.ttf
+    - family: ProductSans
+      fonts:
+        - asset: assets/fonts/ProductSans-Thin.ttf
