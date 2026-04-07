@@ -16,7 +16,7 @@ class JumuahPanel extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _label("JUMU'AH IN"),
-          Spacer(),
+          const Spacer(),
           _bigNumber(du.DateUtils.countdownHours(countdown)),
           _bigNumber(du.DateUtils.countdownMinutes(countdown)),
           _secondsNumber(du.DateUtils.countdownSeconds(countdown)),
@@ -40,11 +40,11 @@ class JumuahPanel extends StatelessWidget {
   Widget _bigNumber(String text) => Text(
     text,
     style: const TextStyle(
-      fontFamily: AppFont.googleSans,
+      fontFamily: AppFont.productSansThin,
       fontSize: 50,
       color: AppPallete.textDark,
       height: 0.95,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w300,
     ),
   );
 

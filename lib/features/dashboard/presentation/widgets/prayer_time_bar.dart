@@ -28,17 +28,17 @@ class PrayerTimeBar extends StatelessWidget {
             SizedBox(
               height: 60,
               width: MediaQuery.of(context).size.width / 3,
-              child: VerticalDottedDivider(),
+              child: const VerticalDottedDivider(),
             ),
             SizedBox(
               height: 60,
               width: MediaQuery.of(context).size.width / 3,
-              child: VerticalDottedDivider(),
+              child: const VerticalDottedDivider(),
             ),
             SizedBox(
               height: 60,
               width: MediaQuery.of(context).size.width / 3,
-              child: VerticalDottedDivider(),
+              child: const VerticalDottedDivider(),
             ),
           ],
         ),
@@ -48,7 +48,7 @@ class PrayerTimeBar extends StatelessWidget {
             SizedBox(
               height: 60,
               width: (MediaQuery.of(context).size.width / 3) + 2,
-              child: Row(
+              child: const Row(
                 children: [
                   VerticalDottedDivider(),
                   Spacer(),
@@ -92,10 +92,10 @@ class _PrayerSlot extends StatelessWidget {
           Text(
             du.DateUtils.formatPrayerTime(prayer.time),
             style: const TextStyle(
-              fontFamily: AppFont.googleSans,
+              fontFamily: AppFont.productSansThin,
               fontSize: 20,
               color: AppPallete.textDark,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w300,
             ),
           ),
         ],
