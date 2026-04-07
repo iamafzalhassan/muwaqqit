@@ -25,9 +25,11 @@ class MannersPanel extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          SizedBox(height: 15),
           _label('MASJID MANNERS'),
-          const Spacer(),
+          SizedBox(height: 15),
           _IconGrid(icons: _icons),
+          SizedBox(height: 15),
         ],
       ),
     );
@@ -38,7 +40,7 @@ class MannersPanel extends StatelessWidget {
     textAlign: TextAlign.center,
     style: const TextStyle(
       fontFamily: AppFont.productSansThin,
-      fontSize: 20,
+      fontSize: 35,
       color: AppPallete.textDark,
       letterSpacing: 2,
       fontWeight: FontWeight.w300,

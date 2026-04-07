@@ -27,7 +27,7 @@ flutter:
     - assets/images/
 
   fonts:
-    - family: GoogleSans-Regular
+    - family: GoogleSansRegular
       fonts:
         - asset: assets/fonts/GoogleSans-Regular.ttf
     - family: ProductSansThin

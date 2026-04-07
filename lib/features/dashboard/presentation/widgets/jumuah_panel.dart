@@ -15,11 +15,13 @@ class JumuahPanel extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          SizedBox(height: 15),
           _label("JUMU'AH IN"),
-          const Spacer(),
+          SizedBox(height: 15),
           _bigNumber(du.DateUtils.countdownHours(countdown)),
           _bigNumber(du.DateUtils.countdownMinutes(countdown)),
           _secondsNumber(du.DateUtils.countdownSeconds(countdown)),
+          SizedBox(height: 15),
         ],
       ),
     );
@@ -30,22 +32,38 @@ class JumuahPanel extends StatelessWidget {
     textAlign: TextAlign.center,
     style: const TextStyle(
       fontFamily: AppFont.productSansThin,
-      fontSize: 20,
+      fontSize: 35,
       color: AppPallete.textDark,
-      letterSpacing: 2,
       fontWeight: FontWeight.w300,
     ),
   );
 
-  Widget _bigNumber(String text) => Text(
-    text,
-    style: const TextStyle(
-      fontFamily: AppFont.productSansThin,
-      fontSize: 50,
-      color: AppPallete.textDark,
-      height: 0.95,
-      fontWeight: FontWeight.w300,
-    ),
+  Widget _bigNumber(String text) => Stack(
+    children: [
+      Text(
+        text,
+        style: TextStyle(
+          fontFamily: AppFont.googleSansRegular,
+          fontSize: 170,
+          color: AppPallete.textDark,
+          height: 0.85,
+          fontWeight: FontWeight.w300,
+        ),
+      ),
+      Text(
+        text,
+        style: TextStyle(
+          fontFamily: AppFont.googleSansRegular,
+          fontSize: 170,
+          height: 0.85,
+          fontWeight: FontWeight.w300,
+          foreground: Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 10
+            ..color = AppPallete.textDark,
+        ),
+      )
+    ],
   );
 
   Widget _secondsNumber(String text) => Text(

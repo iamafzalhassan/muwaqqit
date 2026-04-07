@@ -26,17 +26,17 @@ class PrayerTimeBar extends StatelessWidget {
         Row(
           children: [
             SizedBox(
-              height: 60,
+              height: 75,
               width: MediaQuery.of(context).size.width / 3,
               child: const VerticalDottedDivider(),
             ),
             SizedBox(
-              height: 60,
+              height: 75,
               width: MediaQuery.of(context).size.width / 3,
               child: const VerticalDottedDivider(),
             ),
             SizedBox(
-              height: 60,
+              height: 75,
               width: MediaQuery.of(context).size.width / 3,
               child: const VerticalDottedDivider(),
             ),
@@ -46,7 +46,7 @@ class PrayerTimeBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: 60,
+              height: 75,
               width: (MediaQuery.of(context).size.width / 3) + 2,
               child: const Row(
                 children: [
@@ -71,7 +71,7 @@ class _PrayerSlot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: 75,
       width: MediaQuery.of(context).size.width / 6,
       color: prayer.isActive
           ? AppPallete.prayerBarActive
@@ -83,17 +83,19 @@ class _PrayerSlot extends StatelessWidget {
             prayer.name,
             style: const TextStyle(
               fontFamily: AppFont.productSansThin,
-              fontSize: 20,
+              fontSize: 25,
               color: AppPallete.textDark,
               letterSpacing: 1.5,
+              height: 1.15,
               fontWeight: FontWeight.w300,
             ),
           ),
           Text(
             du.DateUtils.formatPrayerTime(prayer.time),
             style: const TextStyle(
-              fontFamily: AppFont.productSansThin,
-              fontSize: 20,
+              fontFamily: AppFont.googleSansRegular,
+              fontSize: 25,
+              height: 1.15,
               color: AppPallete.textDark,
               fontWeight: FontWeight.w300,
             ),
@@ -112,7 +114,7 @@ class VerticalDottedDivider extends StatelessWidget {
 
   const VerticalDottedDivider({
     super.key,
-    this.height = 60,
+    this.height = 75,
     this.dotHeight = 4,
     this.spacing = 4,
     this.color = Colors.white,

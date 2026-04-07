@@ -56,7 +56,7 @@ class HeaderBar extends StatelessWidget {
 
   TextStyle _headerTextStyle() => const TextStyle(
     fontFamily: AppFont.productSansThin,
-    fontSize: 20,
+    fontSize: 25,
     color: AppPallete.textWhite,
     letterSpacing: 2,
     fontWeight: FontWeight.w300,
@@ -73,7 +73,7 @@ class _HeaderCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: color,
-      height: 70,
+      height: 50,
       alignment: Alignment.center,
       child: child,
     );

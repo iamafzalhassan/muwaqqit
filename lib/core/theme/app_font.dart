@@ -1,4 +1,4 @@
 abstract class AppFont {
-  static const String googleSans = 'GoogleSans';
+  static const String googleSansRegular = 'GoogleSansRegular';
   static const String productSansThin = 'ProductSansThin';
 }
