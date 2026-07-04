@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:muwaqqit/core/theme/app_font.dart';
 import 'package:muwaqqit/core/theme/app_pallete.dart';
+import 'package:muwaqqit/features/dashboard/presentation/widgets/header_cell.dart';
 
 class HeaderBar extends StatelessWidget {
   const HeaderBar({
@@ -19,34 +20,34 @@ class HeaderBar extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: _HeaderCell(
+          child: HeaderCell(
             color: AppPallete.headerDark,
             child: Text(
               gregorianDate,
               textAlign: TextAlign.center,
-              style: _headerTextStyle(),
+              style: headerTextStyle(),
             ),
           ),
         ),
 
         Expanded(
-          child: _HeaderCell(
+          child: HeaderCell(
             color: AppPallete.headerDarker,
             child: Text(
               masjidName,
               textAlign: TextAlign.center,
-              style: _headerTextStyle(),
+              style: headerTextStyle(),
             ),
           ),
         ),
 
         Expanded(
-          child: _HeaderCell(
+          child: HeaderCell(
             color: AppPallete.headerDark,
             child: Text(
               hijriDate,
               textAlign: TextAlign.center,
-              style: _headerTextStyle(),
+              style: headerTextStyle(),
             ),
           ),
         ),
@@ -54,28 +55,11 @@ class HeaderBar extends StatelessWidget {
     );
   }
 
-  TextStyle _headerTextStyle() => const TextStyle(
+  TextStyle headerTextStyle() => const TextStyle(
     fontFamily: AppFont.productSansThin,
     fontSize: 25,
     color: AppPallete.textWhite,
     letterSpacing: 2,
     fontWeight: FontWeight.w300,
   );
-}
-
-class _HeaderCell extends StatelessWidget {
-  const _HeaderCell({required this.color, required this.child});
-
-  final Color color;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: color,
-      height: 50,
-      alignment: Alignment.center,
-      child: child,
-    );
-  }
 }

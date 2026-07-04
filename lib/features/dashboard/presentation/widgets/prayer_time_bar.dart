@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:muwaqqit/core/theme/app_font.dart';
-import 'package:muwaqqit/core/theme/app_pallete.dart';
-import 'package:muwaqqit/core/utils/date_utils.dart' as du;
 import 'package:muwaqqit/features/dashboard/domain/entities/prayer_time.dart';
+import 'package:muwaqqit/features/dashboard/presentation/widgets/prayer_slot.dart';
 
 class PrayerTimeBar extends StatelessWidget {
   const PrayerTimeBar({super.key, required this.prayers});
@@ -15,12 +13,12 @@ class PrayerTimeBar extends StatelessWidget {
       children: [
         Row(
           children: [
-            _PrayerSlot(prayer: prayers[0]),
-            _PrayerSlot(prayer: prayers[1]),
-            _PrayerSlot(prayer: prayers[2]),
-            _PrayerSlot(prayer: prayers[3]),
-            _PrayerSlot(prayer: prayers[4]),
-            _PrayerSlot(prayer: prayers[5]),
+            PrayerSlot(prayer: prayers[0]),
+            PrayerSlot(prayer: prayers[1]),
+            PrayerSlot(prayer: prayers[2]),
+            PrayerSlot(prayer: prayers[3]),
+            PrayerSlot(prayer: prayers[4]),
+            PrayerSlot(prayer: prayers[5]),
           ],
         ),
         Row(
@@ -59,49 +57,6 @@ class PrayerTimeBar extends StatelessWidget {
           ],
         ),
       ],
-    );
-  }
-}
-
-class _PrayerSlot extends StatelessWidget {
-  const _PrayerSlot({required this.prayer});
-
-  final PrayerTime prayer;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 75,
-      width: MediaQuery.of(context).size.width / 6,
-      color: prayer.isActive
-          ? AppPallete.prayerBarActive
-          : AppPallete.prayerBarInactive,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            prayer.name,
-            style: const TextStyle(
-              fontFamily: AppFont.productSansThin,
-              fontSize: 25,
-              color: AppPallete.textDark,
-              letterSpacing: 1.5,
-              height: 1.15,
-              fontWeight: FontWeight.w300,
-            ),
-          ),
-          Text(
-            du.DateUtils.formatPrayerTime(prayer.time),
-            style: const TextStyle(
-              fontFamily: AppFont.googleSansRegular,
-              fontSize: 25,
-              height: 1.15,
-              color: AppPallete.textDark,
-              fontWeight: FontWeight.w300,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

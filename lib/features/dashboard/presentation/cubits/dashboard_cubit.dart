@@ -4,22 +4,22 @@ import 'package:muwaqqit/features/dashboard/presentation/cubits/dashboard_state.
 import 'package:muwaqqit/features/dashboard/domain/repositories/dashboard_repository.dart';
 
 class DashboardCubit extends Cubit<DashboardState> {
-  DashboardCubit({required DashboardRepository repository}): _repository = repository, super(repository.getInitialState()) {
-    _startTimer();
+  DashboardCubit({required this.repository}) : super(repository.getInitialState()) {
+    startTimer();
   }
 
-  final DashboardRepository _repository;
-  Timer? _timer;
+  final DashboardRepository repository;
+  Timer? timer;
 
-  void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      emit(_repository.tick(state));
+  void startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      emit(repository.tick(state));
     });
   }
 
   @override
   Future<void> close() {
-    _timer?.cancel();
+    timer?.cancel();
     return super.close();
   }
 }
