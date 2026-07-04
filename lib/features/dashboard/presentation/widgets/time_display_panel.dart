@@ -32,13 +32,15 @@ class TimeDisplayPanel extends StatelessWidget {
           SizedBox(height: 15),
           Expanded(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 bigNumber(primary),
                 bigNumber(secondary),
+                SizedBox(height: 15),
+                secondsNumber(seconds),
               ],
             ),
           ),
-          secondsNumber(seconds),
           SizedBox(height: 15),
         ],
       ),
@@ -63,7 +65,7 @@ class TimeDisplayPanel extends StatelessWidget {
         text,
         style: TextStyle(
           fontFamily: AppFont.googleSansRegular,
-          fontSize: 200,
+          fontSize: 220,
           color: AppPallete.textDark,
           height: 0.85,
           fontWeight: FontWeight.w300,
@@ -73,7 +75,7 @@ class TimeDisplayPanel extends StatelessWidget {
         text,
         style: TextStyle(
           fontFamily: AppFont.googleSansRegular,
-          fontSize: 200,
+          fontSize: 220,
           height: 0.85,
           fontWeight: FontWeight.w300,
           foreground: Paint()
@@ -89,7 +91,8 @@ class TimeDisplayPanel extends StatelessWidget {
     text,
     style: const TextStyle(
       fontFamily: AppFont.productSansThin,
-      fontSize: 100,
+      fontSize: 80,
+      height: 0.85,
       color: AppPallete.textDark,
       fontWeight: FontWeight.w300,
     ),

@@ -1,19 +1,19 @@
 class PrayerTime {
+  final bool isActive;
   final String name;
   final DateTime time;
-  final bool isActive;
 
   const PrayerTime({
+    this.isActive = false,
     required this.name,
     required this.time,
-    this.isActive = false,
   });
 
-  PrayerTime copyWith({String? name, DateTime? time, bool? isActive}) {
+  PrayerTime copyWith({bool? isActive, String? name, DateTime? time}) {
     return PrayerTime(
+      isActive: isActive ?? this.isActive,
       name: name ?? this.name,
       time: time ?? this.time,
-      isActive: isActive ?? this.isActive,
     );
   }
 }

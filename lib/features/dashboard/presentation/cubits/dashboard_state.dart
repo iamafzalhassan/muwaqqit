@@ -4,16 +4,16 @@ class DashboardState {
   final String gregorianDate;
   final String hijriDate;
   final String masjidName;
-  final DateTime now;
   final DateTime jumuahTime;
+  final DateTime now;
   final List<PrayerTime> prayerTimes;
 
   const DashboardState({
     required this.gregorianDate,
     required this.hijriDate,
     required this.masjidName,
-    required this.now,
     required this.jumuahTime,
+    required this.now,
     required this.prayerTimes,
   });
 
@@ -23,16 +23,16 @@ class DashboardState {
     String? gregorianDate,
     String? hijriDate,
     String? masjidName,
-    DateTime? now,
     DateTime? jumuahTime,
+    DateTime? now,
     List<PrayerTime>? prayerTimes,
   }) {
     return DashboardState(
       gregorianDate: gregorianDate ?? this.gregorianDate,
       hijriDate: hijriDate ?? this.hijriDate,
       masjidName: masjidName ?? this.masjidName,
-      now: now ?? this.now,
       jumuahTime: jumuahTime ?? this.jumuahTime,
+      now: now ?? this.now,
       prayerTimes: prayerTimes ?? this.prayerTimes,
     );
   }
