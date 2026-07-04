@@ -7,12 +7,12 @@ import 'manners_panel.dart';
 class MainPanelsRow extends StatelessWidget {
   const MainPanelsRow({
     super.key,
-    required this.now,
     required this.jumuahCountdown,
+    required this.now,
   });
 
-  final DateTime now;
   final Duration jumuahCountdown;
+  final DateTime now;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +23,8 @@ class MainPanelsRow extends StatelessWidget {
           Expanded(
             child: TimeDisplayPanel(
               color: AppPallete.panelGrey,
-              labelText: 'TIME',
               labelLetterSpacing: 2,
+              labelText: 'TIME',
               primary: du.DateUtils.formatHours(now),
               secondary: du.DateUtils.formatMinutes(now),
               seconds: du.DateUtils.formatSeconds(now),

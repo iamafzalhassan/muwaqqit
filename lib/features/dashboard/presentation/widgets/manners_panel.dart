@@ -37,7 +37,6 @@ class MannersPanel extends StatelessWidget {
 
   Widget label(String text) => Text(
     text,
-    textAlign: TextAlign.center,
     style: const TextStyle(
       fontFamily: AppFont.productSansThin,
       fontSize: 35,
@@ -45,5 +44,6 @@ class MannersPanel extends StatelessWidget {
       letterSpacing: 2,
       fontWeight: FontWeight.w300,
     ),
+    textAlign: TextAlign.center,
   );
 }

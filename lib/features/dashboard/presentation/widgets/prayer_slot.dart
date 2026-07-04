@@ -12,9 +12,9 @@ class PrayerSlot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: prayer.isActive ? AppPallete.prayerBarActive : AppPallete.prayerBarInactive,
       height: 75,
       width: MediaQuery.of(context).size.width / 6,
-      color: prayer.isActive ? AppPallete.prayerBarActive : AppPallete.prayerBarInactive,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

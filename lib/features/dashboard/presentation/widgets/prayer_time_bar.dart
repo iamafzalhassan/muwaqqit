@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:muwaqqit/features/dashboard/domain/entities/prayer_time.dart';
 import 'package:muwaqqit/features/dashboard/presentation/widgets/prayer_slot.dart';
+import 'package:muwaqqit/features/dashboard/presentation/widgets/vertical_dotted_divider.dart';
 
 class PrayerTimeBar extends StatelessWidget {
   const PrayerTimeBar({super.key, required this.prayers});
@@ -57,35 +58,6 @@ class PrayerTimeBar extends StatelessWidget {
           ],
         ),
       ],
-    );
-  }
-}
-
-class VerticalDottedDivider extends StatelessWidget {
-  final double height;
-  final double dotHeight;
-  final double spacing;
-  final Color color;
-
-  const VerticalDottedDivider({
-    super.key,
-    this.height = 75,
-    this.dotHeight = 4,
-    this.spacing = 4,
-    this.color = Colors.white,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: List.generate(
-          (height / (dotHeight + spacing)).floor(),
-          (_) => Container(width: 2, height: dotHeight, color: color),
-        ),
-      ),
     );
   }
 }

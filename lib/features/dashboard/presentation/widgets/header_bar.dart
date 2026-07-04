@@ -7,13 +7,13 @@ class HeaderBar extends StatelessWidget {
   const HeaderBar({
     super.key,
     required this.gregorianDate,
-    required this.masjidName,
     required this.hijriDate,
+    required this.masjidName,
   });
 
   final String gregorianDate;
-  final String masjidName;
   final String hijriDate;
+  final String masjidName;
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +24,8 @@ class HeaderBar extends StatelessWidget {
             color: AppPallete.headerDark,
             child: Text(
               gregorianDate,
-              textAlign: TextAlign.center,
               style: headerTextStyle(),
+              textAlign: TextAlign.center,
             ),
           ),
         ),
@@ -35,8 +35,8 @@ class HeaderBar extends StatelessWidget {
             color: AppPallete.headerDarker,
             child: Text(
               masjidName,
-              textAlign: TextAlign.center,
               style: headerTextStyle(),
+              textAlign: TextAlign.center,
             ),
           ),
         ),
@@ -46,8 +46,8 @@ class HeaderBar extends StatelessWidget {
             color: AppPallete.headerDark,
             child: Text(
               hijriDate,
-              textAlign: TextAlign.center,
               style: headerTextStyle(),
+              textAlign: TextAlign.center,
             ),
           ),
         ),

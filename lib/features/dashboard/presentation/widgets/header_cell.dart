@@ -9,9 +9,9 @@ class HeaderCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.center,
       color: color,
       height: 50,
-      alignment: Alignment.center,
       child: child,
     );
   }

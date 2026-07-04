@@ -19,12 +19,12 @@ class Dashboard extends StatelessWidget {
             children: [
               HeaderBar(
                 gregorianDate: state.gregorianDate,
-                masjidName: state.masjidName,
                 hijriDate: state.hijriDate,
+                masjidName: state.masjidName,
               ),
               MainPanelsRow(
-                now: state.now,
                 jumuahCountdown: state.jumuahCountdown,
+                now: state.now,
               ),
               PrayerTimeBar(prayers: state.prayerTimes),
             ],

@@ -16,10 +16,10 @@ class Muwaqqit extends StatelessWidget {
         repository: const DashboardRepositoryImpl(),
       ),
       child: MaterialApp(
-        title: 'Muwaqqit',
         debugShowCheckedModeBanner: false,
-        theme: AppTheme.light,
         home: const Dashboard(),
+        theme: AppTheme.light,
+        title: 'Muwaqqit',
       ),
     );
   }

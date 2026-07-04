@@ -5,20 +5,20 @@ import 'package:muwaqqit/core/theme/app_pallete.dart';
 class TimeDisplayPanel extends StatelessWidget {
   const TimeDisplayPanel({
     super.key,
-    required this.color,
+    this.labelLetterSpacing,
     required this.labelText,
     required this.primary,
     required this.secondary,
     required this.seconds,
-    this.labelLetterSpacing,
+    required this.color,
   });
 
-  final Color color;
+  final double? labelLetterSpacing;
   final String labelText;
   final String primary;
   final String secondary;
   final String seconds;
-  final double? labelLetterSpacing;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,6 @@ class TimeDisplayPanel extends StatelessWidget {
 
   Widget label(String text) => Text(
     text,
-    textAlign: TextAlign.center,
     style: TextStyle(
       fontFamily: AppFont.productSansThin,
       fontSize: 35,
@@ -57,6 +56,7 @@ class TimeDisplayPanel extends StatelessWidget {
       letterSpacing: labelLetterSpacing,
       fontWeight: FontWeight.w300,
     ),
+    textAlign: TextAlign.center,
   );
 
   Widget bigNumber(String text) => Stack(
