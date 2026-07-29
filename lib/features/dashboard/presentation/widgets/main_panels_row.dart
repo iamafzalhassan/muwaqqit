@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:muwaqqit/core/theme/app_pallete.dart';
 import 'package:muwaqqit/core/utils/date_utils.dart' as du;
 import 'time_display_panel.dart';
-import 'manners_panel.dart';
 
 class MainPanelsRow extends StatelessWidget {
   const MainPanelsRow({
@@ -16,6 +15,8 @@ class MainPanelsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int countdownSeconds = jumuahCountdown.isNegative ? 0 : jumuahCountdown.inSeconds.remainder(60);
+
     return Expanded(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -27,19 +28,22 @@ class MainPanelsRow extends StatelessWidget {
               labelText: 'TIME',
               primary: du.DateUtils.formatHours(now),
               secondary: du.DateUtils.formatMinutes(now),
-              seconds: du.DateUtils.formatSeconds(now),
+              secondsValue: now.second,
+              dotColor: AppPallete.dotActiveGreen,
+              clockwise: true,
             ),
           ),
           Expanded(
             child: TimeDisplayPanel(
               color: AppPallete.panelYellow,
-              labelText: "JUMU'AH IN",
+              labelText: 'IQAMAH IN',
               primary: du.DateUtils.countdownHours(jumuahCountdown),
               secondary: du.DateUtils.countdownMinutes(jumuahCountdown),
-              seconds: du.DateUtils.countdownSeconds(jumuahCountdown),
+              secondsValue: countdownSeconds,
+              dotColor: AppPallete.dotActiveRed,
+              clockwise: false,
             ),
           ),
-          Expanded(child: MannersPanel()),
         ],
       ),
     );

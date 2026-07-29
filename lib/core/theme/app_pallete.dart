@@ -10,6 +10,9 @@ abstract class AppPallete {
   static const Color prayerBarActive = Color(0xFF62BE87);
   static const Color prayerBarInactive = Color(0xFF96D4AF);
 
+  static const Color dotActiveGreen = Color(0xFF2E9E5B);
+  static const Color dotActiveRed = Color(0xFFD64545);
+
   static const Color textDark = Color(0xFF2D3436);
   static const Color textWhite = Colors.white;
   static const Color textBlack = Colors.black;
