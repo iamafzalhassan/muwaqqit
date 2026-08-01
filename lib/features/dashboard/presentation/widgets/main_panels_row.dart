@@ -6,16 +6,18 @@ import 'time_display_panel.dart';
 class MainPanelsRow extends StatelessWidget {
   const MainPanelsRow({
     super.key,
-    required this.jumuahCountdown,
+    required this.countdown,
+    required this.countdownLabel,
     required this.now,
   });
 
-  final Duration jumuahCountdown;
+  final Duration countdown;
+  final String countdownLabel;
   final DateTime now;
 
   @override
   Widget build(BuildContext context) {
-    final int countdownSeconds = jumuahCountdown.isNegative ? 0 : jumuahCountdown.inSeconds.remainder(60);
+    final int countdownSeconds = countdown.isNegative ? 0 : countdown.inSeconds.remainder(60);
 
     return Expanded(
       child: Row(
@@ -36,9 +38,9 @@ class MainPanelsRow extends StatelessWidget {
           Expanded(
             child: TimeDisplayPanel(
               color: AppPallete.panelYellow,
-              labelText: 'IQAMAH IN',
-              primary: du.DateUtils.countdownHours(jumuahCountdown),
-              secondary: du.DateUtils.countdownMinutes(jumuahCountdown),
+              labelText: countdownLabel,
+              primary: du.DateUtils.countdownHours(countdown),
+              secondary: du.DateUtils.countdownMinutes(countdown),
               secondsValue: countdownSeconds,
               dotColor: AppPallete.dotActiveRed,
               clockwise: false,

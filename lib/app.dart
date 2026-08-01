@@ -13,7 +13,7 @@ class Muwaqqit extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => DashboardCubit(
-        repository: const DashboardRepositoryImpl(),
+        repository: DashboardRepositoryImpl(),
       ),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

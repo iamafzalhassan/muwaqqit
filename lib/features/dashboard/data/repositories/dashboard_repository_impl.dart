@@ -1,61 +1,97 @@
 import 'package:intl/intl.dart';
+import 'package:muwaqqit/core/constants/iqamah_gaps.dart';
+import 'package:muwaqqit/features/dashboard/data/services/location_service.dart';
+import 'package:muwaqqit/features/dashboard/data/services/prayer_time_service.dart';
 import 'package:muwaqqit/features/dashboard/presentation/cubits/dashboard_state.dart';
 import 'package:muwaqqit/features/dashboard/domain/entities/prayer_time.dart';
 import 'package:muwaqqit/features/dashboard/domain/repositories/dashboard_repository.dart';
 
 class DashboardRepositoryImpl implements DashboardRepository {
-  const DashboardRepositoryImpl();
+  DashboardRepositoryImpl({
+    this.locationService = const LocationService(),
+    this.prayerTimeService = const PrayerTimeService(),
+  });
+
+  final LocationService locationService;
+  final PrayerTimeService prayerTimeService;
+
+  double? _lat;
+  double? _lng;
+
+  DateTime? _cachedDay;
+  DateTime? _cachedNextFajr;
+
+  List<PrayerTime>? _cachedPrayers;
 
   @override
-  DashboardState getInitialState() {
-    final now = DateTime.now();
-    return buildState(now);
+  Future<DashboardState> load() async {
+    final location = await locationService.current();
+    _lat = location.lat;
+    _lng = location.lng;
+    return buildState(DateTime.now());
   }
 
   @override
-  DashboardState tick(DashboardState current) {
-    final now = DateTime.now();
-    return buildState(now);
-  }
+  DashboardState tick(DashboardState current) => buildState(DateTime.now());
 
   DashboardState buildState(DateTime now) {
+    final lat = _lat;
+    final lng = _lng;
+    if (lat == null || lng == null) return DashboardState.loading();
+
     final today = DateTime(now.year, now.month, now.day);
-    final prayers = buildPrayerTimes(today, now);
-    final jumuah = today.add(const Duration(hours: 12, minutes: 3));
+    if (_cachedDay != today) {
+      _cachedDay = today;
+      _cachedPrayers = prayerTimeService.forDate(date: today, lat: lat, lng: lng);
+      _cachedNextFajr = prayerTimeService.nextFajr(date: today, lat: lat, lng: lng);
+    }
+
+    final prayers = _withActive(_cachedPrayers!, now);
+    final next = _nextEvent(prayers, now, _cachedNextFajr!);
 
     return DashboardState(
-      gregorianDate: formatGregorian(now),
+      gregorianDate: _formatGregorian(now),
       hijriDate: '05 RABI AL AKHIR 1447',
       masjidName: 'MUHIYYADDEEN MASJID',
-      jumuahTime: jumuah,
       now: now,
       prayerTimes: prayers,
+      nextPrayerTime: next.time,
+      nextLabel: next.label,
     );
   }
 
-  List<PrayerTime> buildPrayerTimes(DateTime today, DateTime now) {
-    MapEntry<String, Duration>? active;
-
-    final times = <String, Duration>{
-      'FAJR': const Duration(hours: 4, minutes: 44),
-      'SUNRISE': const Duration(hours: 5, minutes: 59),
-      "JUMU'AH": const Duration(hours: 12, minutes: 3),
-      'ASR': const Duration(hours: 15, minutes: 16),
-      'MAGHRIB': const Duration(hours: 18, minutes: 5),
-      'ISHA': const Duration(hours: 19, minutes: 14),
-    };
-
-    for (final entry in times.entries) {
-      if (!now.isBefore(today.add(entry.value))) active = entry;
+  List<PrayerTime> _withActive(List<PrayerTime> prayers, DateTime now) {
+    String? activeName;
+    for (final prayer in prayers) {
+      if (!now.isBefore(prayer.time)) activeName = prayer.name;
     }
-
-    return times.entries.map((e) {
-      final time = today.add(e.value);
-      return PrayerTime(isActive: e.key == active?.key, name: e.key, time: time);
-    }).toList();
+    return prayers.map((p) => p.copyWith(isActive: p.name == activeName)).toList();
   }
 
-  String formatGregorian(DateTime date) {
-    return DateFormat('d MMMM yyyy').format(date).toUpperCase();
+  ({String label, DateTime time}) _nextEvent(
+    List<PrayerTime> prayers,
+    DateTime now,
+    DateTime nextFajr,
+  ) {
+    final events = <({String label, DateTime time})>[];
+    for (final prayer in prayers) {
+      if (prayer.name == 'SUNRISE') {
+        events.add((label: 'FAJR ENDS IN', time: prayer.time));
+      } else {
+        events.add((label: '${prayer.name} AZAN IN', time: prayer.time));
+        events.add((
+          label: '${prayer.name} IQAMAH IN',
+          time: prayer.time.add(IqamahGaps.forPrayer(prayer.name)),
+        ));
+      }
+    }
+    events.sort((a, b) => a.time.compareTo(b.time));
+
+    for (final event in events) {
+      if (event.time.isAfter(now)) return event;
+    }
+    return (label: 'FAJR AZAN IN', time: nextFajr);
   }
+
+  String _formatGregorian(DateTime date) => DateFormat('d MMMM yyyy').format(date).toUpperCase();
 }

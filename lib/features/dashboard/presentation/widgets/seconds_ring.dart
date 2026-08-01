@@ -11,23 +11,21 @@ class SecondsRing extends StatelessWidget {
     required this.child,
     this.dotSize = 14,
     this.activeColor = AppPallete.textDark,
-    Color? inactiveColor,
+    this.inactiveColor = const Color(0x33212529),
     this.clockwise = true,
     this.animationDuration = const Duration(milliseconds: 300),
-  }) : inactiveColor = inactiveColor ?? const Color(0x33212529);
+  });
 
-  static const int dotCount = 60;
+  final bool clockwise;
 
   final int activeSeconds;
+  final int dotCount = 60;
 
   final double diameter;
   final double dotSize;
 
   final Color activeColor;
   final Color inactiveColor;
-
-  /// Direction the dots fill in from the top: clockwise vs anticlockwise.
-  final bool clockwise;
 
   final Duration animationDuration;
 

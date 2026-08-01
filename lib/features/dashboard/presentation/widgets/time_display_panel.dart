@@ -26,10 +26,7 @@ class TimeDisplayPanel extends StatelessWidget {
 
   final Color color;
 
-  /// Active-dot color for the seconds ring.
   final Color dotColor;
-
-  /// Direction the ring fills.
   final bool clockwise;
 
   @override
@@ -50,9 +47,6 @@ class TimeDisplayPanel extends StatelessWidget {
 
                 final double gap = h * 0.03;
 
-                // Hours and the ring stack as: number(N) + gap + ring(D), where
-                // the minutes number inside the ring is the same height N, so
-                // hours and minutes render at an identical size. N = 0.5 * D.
                 final double diameter =
                     ((h - gap) / 1.5).clamp(0.0, w * 0.78);
                 final double numberHeight = diameter * 0.5;
@@ -74,8 +68,6 @@ class TimeDisplayPanel extends StatelessWidget {
                       dotSize: diameter * 0.035,
                       activeColor: dotColor,
                       clockwise: clockwise,
-                      // Same height as the hours → matching text size, and it
-                      // stays comfortably inside the ring of dots.
                       child: SizedBox(
                         height: numberHeight,
                         child: FittedBox(

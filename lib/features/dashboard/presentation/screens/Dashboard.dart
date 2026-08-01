@@ -15,6 +15,9 @@ class Dashboard extends StatelessWidget {
       backgroundColor: Colors.white,
       body: BlocBuilder<DashboardCubit, DashboardState>(
         builder: (context, state) {
+          if (!state.ready) {
+            return const Center(child: CircularProgressIndicator());
+          }
           return Column(
             children: [
               HeaderBar(
@@ -23,7 +26,8 @@ class Dashboard extends StatelessWidget {
                 masjidName: state.masjidName,
               ),
               MainPanelsRow(
-                jumuahCountdown: state.jumuahCountdown,
+                countdown: state.nextPrayerCountdown,
+                countdownLabel: state.nextLabel,
                 now: state.now,
               ),
               PrayerTimeBar(prayers: state.prayerTimes),
