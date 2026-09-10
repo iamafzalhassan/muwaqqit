@@ -4,18 +4,8 @@ import 'package:muwaqqit/features/dashboard/domain/entities/prayer_time.dart';
 class PrayerTimeService {
   const PrayerTimeService();
 
-  CalculationParameters _params() {
-    final params = CalculationMethod.karachi.getParameters();
-    params.madhab = Madhab.shafi;
-    return params;
-  }
-
-  List<PrayerTime> forDate({
-    required DateTime date,
-    required double lat,
-    required double lng,
-  }) {
-    final prayers = _compute(date, lat, lng);
+  List<PrayerTime> forDate({required DateTime date, required double lat, required double lng}) {
+    final prayers = compute(date, lat, lng);
     final noonName = date.weekday == DateTime.friday ? "JUMU'AH" : 'DHUHR';
     return [
       PrayerTime(name: 'FAJR', time: prayers.fajr!.toLocal()),
@@ -27,18 +17,20 @@ class PrayerTimeService {
     ];
   }
 
-  DateTime nextFajr({
-    required DateTime date,
-    required double lat,
-    required double lng,
-  }) {
+  DateTime nextFajr({required DateTime date, required double lat, required double lng}) {
     final next = date.add(const Duration(days: 1));
-    return _compute(next, lat, lng).fajr!.toLocal();
+    return compute(next, lat, lng).fajr!.toLocal();
   }
 
-  PrayerTimes _compute(DateTime date, double lat, double lng) {
+  PrayerTimes compute(DateTime date, double lat, double lng) {
     final coordinates = Coordinates(lat, lng);
     final components = DateComponents(date.year, date.month, date.day);
-    return PrayerTimes(coordinates, components, _params());
+    return PrayerTimes(coordinates, components, params());
+  }
+
+  CalculationParameters params() {
+    final parameters = CalculationMethod.karachi.getParameters();
+    parameters.madhab = Madhab.shafi;
+    return parameters;
   }
 }

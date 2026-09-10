@@ -6,23 +6,23 @@ import 'package:muwaqqit/core/theme/app_pallete.dart';
 class SecondsRing extends StatelessWidget {
   const SecondsRing({
     super.key,
-    required this.activeSeconds,
+    this.clockwise = true,
     required this.diameter,
-    required this.child,
     this.dotSize = 14,
+    required this.activeSeconds,
     this.activeColor = AppPallete.textDark,
     this.inactiveColor = const Color(0x33212529),
-    this.clockwise = true,
     this.animationDuration = const Duration(milliseconds: 300),
+    required this.child,
   });
 
   final bool clockwise;
 
-  final int activeSeconds;
-  final int dotCount = 60;
-
   final double diameter;
   final double dotSize;
+
+  final int activeSeconds;
+  final int dotCount = 60;
 
   final Color activeColor;
   final Color inactiveColor;
@@ -47,22 +47,19 @@ class SecondsRing extends StatelessWidget {
           left: dx,
           top: dy,
           child: AnimatedContainer(
-            duration: animationDuration,
             curve: Curves.easeOut,
-            width: dotSize,
+            decoration: BoxDecoration(shape: BoxShape.circle, color: i < activeSeconds ? activeColor : inactiveColor),
+            duration: animationDuration,
             height: dotSize,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: i < activeSeconds ? activeColor : inactiveColor,
-            ),
+            width: dotSize,
           ),
         ),
       );
     }
 
     return SizedBox(
-      width: diameter,
       height: diameter,
+      width: diameter,
       child: Stack(alignment: Alignment.center, children: [...dots, child]),
     );
   }

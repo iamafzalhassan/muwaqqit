@@ -1,18 +1,19 @@
 import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:muwaqqit/features/dashboard/presentation/cubits/dashboard_state.dart';
 import 'package:muwaqqit/features/dashboard/domain/repositories/dashboard_repository.dart';
+import 'package:muwaqqit/features/dashboard/presentation/cubits/dashboard_state.dart';
 
 class DashboardCubit extends Cubit<DashboardState> {
-  DashboardCubit({required this.repository})
-    : super(DashboardState.loading()) {
-    _init();
-  }
-
   final DashboardRepository repository;
+
   Timer? timer;
 
-  Future<void> _init() async {
+  DashboardCubit({required this.repository}) : super(DashboardState.loading()) {
+    init();
+  }
+
+  Future<void> init() async {
     final state = await repository.load();
     if (isClosed) return;
     emit(state);
