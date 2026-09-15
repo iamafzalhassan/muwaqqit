@@ -1,3 +1,4 @@
+import '../../domain/entities/dashboard_snapshot.dart';
 import '../../domain/entities/prayer_time.dart';
 
 class DashboardState {
@@ -14,6 +15,16 @@ class DashboardState {
   final DateTime now;
 
   const DashboardState({this.ready = true, required this.gregorianDate, required this.hijriDate, required this.masjidName, required this.nextLabel, required this.prayerTimes, required this.nextPrayerTime, required this.now});
+
+  factory DashboardState.fromSnapshot(DashboardSnapshot snapshot) => DashboardState(
+    gregorianDate: snapshot.gregorianDate,
+    hijriDate: snapshot.hijriDate,
+    masjidName: snapshot.masjidName,
+    nextLabel: snapshot.nextLabel,
+    prayerTimes: snapshot.prayerTimes,
+    nextPrayerTime: snapshot.nextPrayerTime,
+    now: snapshot.now,
+  );
 
   factory DashboardState.loading() {
     final now = DateTime.now();

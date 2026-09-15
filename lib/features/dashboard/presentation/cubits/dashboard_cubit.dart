@@ -14,16 +14,16 @@ class DashboardCubit extends Cubit<DashboardState> {
   }
 
   Future<void> init() async {
-    final state = await repository.load();
+    final snapshot = await repository.load();
     if (isClosed) return;
-    emit(state);
+    emit(DashboardState.fromSnapshot(snapshot));
     startTimer();
   }
 
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (isClosed) return;
-      emit(repository.tick(state));
+      emit(DashboardState.fromSnapshot(repository.refresh()));
     });
   }
 

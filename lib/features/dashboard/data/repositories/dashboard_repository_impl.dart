@@ -2,9 +2,9 @@ import 'package:intl/intl.dart';
 import 'package:muwaqqit/core/constants/iqamah_gaps.dart';
 import 'package:muwaqqit/features/dashboard/data/services/location_service.dart';
 import 'package:muwaqqit/features/dashboard/data/services/prayer_time_service.dart';
+import 'package:muwaqqit/features/dashboard/domain/entities/dashboard_snapshot.dart';
 import 'package:muwaqqit/features/dashboard/domain/entities/prayer_time.dart';
 import 'package:muwaqqit/features/dashboard/domain/repositories/dashboard_repository.dart';
-import 'package:muwaqqit/features/dashboard/presentation/cubits/dashboard_state.dart';
 
 class DashboardRepositoryImpl implements DashboardRepository {
   final LocationService locationService;
@@ -21,10 +21,9 @@ class DashboardRepositoryImpl implements DashboardRepository {
 
   DashboardRepositoryImpl({this.locationService = const LocationService(), this.prayerTimeService = const PrayerTimeService()});
 
-  DashboardState buildState(DateTime now) {
-    final latitude = lat;
-    final longitude = lng;
-    if (latitude == null || longitude == null) return DashboardState.loading();
+  DashboardSnapshot snapshotAt(DateTime now) {
+    final latitude = lat ?? locationService.fallback.lat;
+    final longitude = lng ?? locationService.fallback.lng;
 
     final today = DateTime(now.year, now.month, now.day);
     if (cachedDay != today) {
@@ -36,7 +35,7 @@ class DashboardRepositoryImpl implements DashboardRepository {
     final prayers = withActive(cachedPrayers!, now);
     final next = nextEvent(prayers, now, cachedNextFajr!);
 
-    return DashboardState(gregorianDate: formatGregorian(now), hijriDate: '05 RABI AL AKHIR 1447', masjidName: 'MUHIYYADDEEN MASJID', nextLabel: next.label, prayerTimes: prayers, nextPrayerTime: next.time, now: now);
+    return DashboardSnapshot(gregorianDate: formatGregorian(now), hijriDate: '05 RABI AL AKHIR 1447', masjidName: 'MUHIYYADDEEN MASJID', nextLabel: next.label, prayerTimes: prayers, nextPrayerTime: next.time, now: now);
   }
 
   List<PrayerTime> withActive(List<PrayerTime> prayers, DateTime now) {
@@ -68,13 +67,13 @@ class DashboardRepositoryImpl implements DashboardRepository {
   String formatGregorian(DateTime date) => DateFormat('d MMMM yyyy').format(date).toUpperCase();
 
   @override
-  Future<DashboardState> load() async {
+  Future<DashboardSnapshot> load() async {
     final location = await locationService.current();
     lat = location.lat;
     lng = location.lng;
-    return buildState(DateTime.now());
+    return snapshotAt(DateTime.now());
   }
 
   @override
-  DashboardState tick(DashboardState current) => buildState(DateTime.now());
+  DashboardSnapshot refresh() => snapshotAt(DateTime.now());
 }

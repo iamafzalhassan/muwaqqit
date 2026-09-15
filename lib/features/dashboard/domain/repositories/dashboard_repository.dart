@@ -1,7 +1,7 @@
-import 'package:muwaqqit/features/dashboard/presentation/cubits/dashboard_state.dart';
+import 'package:muwaqqit/features/dashboard/domain/entities/dashboard_snapshot.dart';
 
 abstract class DashboardRepository {
-  Future<DashboardState> load();
+  Future<DashboardSnapshot> load();
 
-  DashboardState tick(DashboardState current);
+  DashboardSnapshot refresh();
 }
