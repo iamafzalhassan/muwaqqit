@@ -1,64 +1,83 @@
 # Muwaqqit
 
-A Flutter prayer-times display application designed for masjid screens. It calculates the daily prayer timetable from the device's location and shows a live, full-screen dashboard with the current time, a countdown to the next Azan or Iqamah, and the day's prayer schedule.
+![Flutter](https://img.shields.io/badge/Flutter-3.35%2B-02569B?logo=flutter&logoColor=white)
+![BLoC](https://img.shields.io/badge/BLoC-Cubit-13B9FD)
+![Offline](https://img.shields.io/badge/data-fully_offline-1B6B4F)
+![Platforms](https://img.shields.io/badge/platforms-Android%20%7C%20Web-3DDC84)
 
-## Project Overview
+A prayer-times board for masjid displays, built with Flutter. Muwaqqit (Arabic for "timekeeper") turns a landscape tablet, TV or browser into a full-screen dashboard showing the current time, a live countdown to the next Azan or Iqamah, and the day's prayer schedule.
 
-Muwaqqit (Arabic for "timekeeper") turns a landscape tablet, TV or browser into a masjid prayer-time board. Prayer times are calculated on the device with astronomical formulas, so no internet connection or external API is needed. The dashboard updates every second, and the display is built to be read clearly from across a prayer hall.
+Prayer times are calculated on the device with astronomical formulas, so the board needs no internet connection and no external API. The display refreshes every second and is designed to be read from across a prayer hall.
 
-## Key Features
+## Features
 
-**Prayer Time Calculation**
-- Offline astronomical calculation using the `adhan` library
-- Karachi calculation method with Shafi madhab for Asr
-- Six daily times: Fajr, Sunrise, Dhuhr, Asr, Maghrib and Isha
-- Automatic Jumu'ah label on Fridays
-- Next day's Fajr computed for the overnight countdown
-- Daily timetable cached and recalculated only when the date changes
+- **Offline prayer times** for Fajr, Sunrise, Dhuhr, Asr, Maghrib and Isha, calculated from the device's location with the Karachi method and the Shafi madhab for Asr.
+- **Jumu'ah on Fridays**: the Dhuhr slot is labelled Jumu'ah automatically.
+- **Azan and Iqamah countdowns** to whichever comes next, with an Iqamah gap per prayer (for example Fajr +20 minutes, Maghrib +5 minutes).
+- **"Fajr ends in"** countdown up to sunrise.
+- **Overnight rollover**: after Isha the countdown moves to the next day's Fajr.
+- **Live dashboard** with a large current-time panel ringed by 60 second dots, a countdown panel whose ring runs anti-clockwise, and a prayer bar that highlights the current prayer.
+- **Header** with the Gregorian date and the masjid name.
+- **Location with a fallback**: the device GPS is used when permission is granted, and Colombo's coordinates when location is off, denied or unavailable.
+- **Display-first**: locked to landscape in immersive full-screen mode, with outlined large numerals and panels sized from the screen width.
 
-**Azan & Iqamah Countdown**
-- Live countdown to the next event, covering both Azan and Iqamah
-- Configurable Iqamah gaps per prayer (for example, Fajr +20 min, Maghrib +5 min)
-- "Fajr ends in" countdown up to sunrise
-- Automatic rollover to the next day's Fajr after Isha
+## Architecture
 
-**Live Dashboard**
-- Large current-time panel with an animated 60-dot seconds ring
-- Countdown panel with a reverse (anti-clockwise) seconds ring
-- Prayer bar that highlights the current prayer
-- Header showing the Gregorian date, masjid name and Hijri date
-- Refreshed every second with a periodic timer
+- **Feature-first folders.** The dashboard feature is split into `data` (location and prayer-time services, repository implementation), `domain` (the `PrayerTime` entity and repository contract) and `presentation` (cubit, state, screen and widgets).
+- **One Cubit drives the board.** `DashboardCubit` loads the location once, then emits a fresh state from a one-second periodic timer and cancels it when closed.
+- **Services behind a repository.** `LocationService` and `PrayerTimeService` are injected into the repository with defaults, so either can be replaced without touching the UI.
+- **Reusable widgets.** The seconds ring, time display panel, prayer slot and dotted dividers are self-contained widgets.
+- **No code generation.** Entities and `copyWith` are written by hand.
 
-**Location Handling**
-- Device GPS location through `geolocator` with runtime permission requests
-- Graceful fallback to Colombo coordinates when location is disabled, denied or unavailable
+## How the timing works
 
-**Display-First Experience**
-- Landscape-locked, immersive full-screen mode for dedicated displays
-- Responsive layout that scales the time panels to any screen size
-- Outlined large-number typography for legibility at a distance
-- Android and web support
+1. **Location is resolved once** at start-up, falling back to Colombo if GPS cannot be used.
+2. **The timetable is cached per day.** Today's prayers and tomorrow's Fajr are calculated when the date changes and reused for every tick until midnight.
+3. **Every tick builds a list of events.** Each prayer contributes an Azan event and an Iqamah event offset by its gap; Sunrise contributes the end of Fajr.
+4. **The next event wins.** Events are sorted by time and the first one still in the future becomes the countdown; if none is left, the countdown targets tomorrow's Fajr.
+5. **The active prayer** is the most recent one whose time has passed, and the prayer bar highlights it.
 
-## Architecture Highlights
+## Tech stack
 
-- Clean Architecture with data, domain and presentation layers
-- Feature-based modular structure
-- BLoC/Cubit state management for predictable state handling
-- Repository pattern with abstract domain contracts
-- Dedicated services for location and prayer-time calculation
-- Immutable entities with hand-written `copyWith`, and no code generation
-- Reusable custom widgets (seconds ring, time display panel, prayer slot, dotted dividers)
+| Area | Choice |
+|---|---|
+| Language | Dart 3.9 |
+| UI | Flutter, Material |
+| State | flutter_bloc (Cubit) |
+| Prayer calculation | adhan |
+| Location | geolocator |
+| Formatting | intl |
+| Platforms | Android, Web |
 
-## Technical Stack
+## Code conventions
 
-- **Frontend:** Flutter, Dart 3.9+
-- **State Management:** flutter_bloc
-- **Prayer Calculation:** adhan
-- **Location:** geolocator
-- **Formatting:** intl
-- **Typography:** Google Sans, Product Sans (bundled)
-- **Platforms:** Android, Web
+- A strict member ordering convention for every class: fields sorted by type tier, then type, then name; methods ordered by call order.
+- No comments in source. Names, types and ordering carry the meaning.
+- `dart format` at a 240-column page width.
 
-## Core Screens
+## Project structure
 
-1. **Dashboard** - Header bar with dates and masjid name, current-time and countdown panels, and the daily prayer-time bar
+```
+lib/
+    main.dart               Landscape lock and immersive mode
+    app.dart                BlocProvider and MaterialApp
+    core/constants/         Asset paths, Iqamah gaps
+    core/theme/             Fonts, palette, theme
+    core/utils/             Date and countdown formatting
+    features/dashboard/
+        data/               LocationService, PrayerTimeService, DashboardRepositoryImpl
+        domain/             PrayerTime, DashboardRepository
+        presentation/       DashboardCubit, DashboardState, Dashboard screen, widgets
+```
+
+## Building
+
+**Requirements:** Flutter 3.35 or later, with the Android SDK for Android builds.
+
+- **Android:** `flutter run`, or `flutter build apk --release`.
+- **Web:** `flutter run -d chrome`, or `flutter build web`.
+
+## Roadmap
+
+- Calculate the Hijri date; the header currently shows a fixed value
+- Configure the masjid name, calculation method and Iqamah gaps from a settings screen
