@@ -23,7 +23,7 @@ Prayer times are calculated on the device with astronomical formulas, so the boa
 
 ## Architecture
 
-- **Feature-first folders.** The dashboard feature is split into `data` (location and prayer-time services, repository implementation), `domain` (the `PrayerTime` entity and repository contract) and `presentation` (cubit, state, screen and widgets).
+- **Feature-first folders.** The dashboard feature is split into `data` (location and prayer-time services, repository implementation), `domain` (the `PrayerTime` and `DashboardSnapshot` entities and the repository contract) and `presentation` (cubit, state, screen and widgets). The domain layer knows nothing about presentation: the repository returns a `DashboardSnapshot`, and the cubit turns it into UI state.
 - **One Cubit drives the board.** `DashboardCubit` loads the location once, then emits a fresh state from a one-second periodic timer and cancels it when closed.
 - **Services behind a repository.** `LocationService` and `PrayerTimeService` are injected into the repository with defaults, so either can be replaced without touching the UI.
 - **Reusable widgets.** The seconds ring, time display panel, prayer slot and dotted dividers are self-contained widgets.
@@ -66,7 +66,7 @@ lib/
     core/utils/             Date and countdown formatting
     features/dashboard/
         data/               LocationService, PrayerTimeService, DashboardRepositoryImpl
-        domain/             PrayerTime, DashboardRepository
+        domain/             PrayerTime, DashboardSnapshot, DashboardRepository
         presentation/       DashboardCubit, DashboardState, Dashboard screen, widgets
 ```
 
@@ -76,6 +76,14 @@ lib/
 
 - **Android:** `flutter run`, or `flutter build apk --release`.
 - **Web:** `flutter run -d chrome`, or `flutter build web`.
+
+## Testing
+
+Unit tests live in `test/`, mirroring the `lib/` path of the code they cover:
+
+- **`test/features/dashboard/data/repositories/dashboard_repository_impl_test.dart`**: the countdown targets the next Azan, then the Iqamah after each prayer's gap, shows when Fajr ends, rolls over to tomorrow's Fajr after Isha, and only the most recent prayer is marked active.
+
+Run them with `flutter test`.
 
 ## Roadmap
 
